@@ -1,0 +1,11 @@
+{
+  "scenarios": [
+    "Clash of Nations [x24]",
+    "World at War [x1]",
+    "World at War [x4]"
+  ],
+  "languages": ["FR", "EN", "DE", "IT"],
+  "only_open_games": true,
+  "send_existing_on_first_run": false
+}
+
