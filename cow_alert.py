@@ -2,6 +2,7 @@ import json
 import os
 import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -50,11 +51,24 @@ def fetch_games():
 
 
 def wanted(game, config):
-    return (
+    matches_filters = (
         game["scenario"] in config["scenarios"]
         and game["language"] in config["languages"]
         and (not config.get("only_open_games", True) or game["slots"] > 0)
     )
+    if not matches_filters:
+        return False
+
+    # CoW Stats affiche les dates en UTC sous la forme JJ-MM-AAAA HH:MM:SS.
+    # La petite tolérance négative couvre un léger décalage d'horloge.
+    try:
+        opened_at = datetime.strptime(game["start"], "%d-%m-%Y %H:%M:%S").replace(
+            tzinfo=timezone.utc
+        )
+    except ValueError:
+        return False
+    age_minutes = (datetime.now(timezone.utc) - opened_at).total_seconds() / 60
+    return -2 <= age_minutes <= config.get("max_start_age_minutes", 10)
 
 
 def send_to_discord(webhook_url, game):

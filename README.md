@@ -11,6 +11,7 @@ correspond aux filtres.
 - World at War `[x4]`
 - Serveurs français (`FR`), anglais (`EN`), allemands (`DE`) et italiens (`IT`)
 - Seulement les parties ayant au moins une place libre
+- Seulement les parties ouvertes depuis 10 minutes maximum
 
 ## Installation sur GitHub
 
@@ -33,6 +34,10 @@ les parties présentes au premier lancement, passe
 
 Édite simplement `config.json`. Les noms de scénarios doivent correspondre à
 ceux affichés sur CoW Stats.
+
+`max_start_age_minutes` définit la marge après l'ouverture. La valeur `10`
+permet de tolérer un léger retard d'une exécution GitHub Actions sans annoncer
+une ancienne partie.
 
 ## Points importants
 
